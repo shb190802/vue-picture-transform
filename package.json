@@ -1,0 +1,23 @@
+{
+  "name": "vue-picture-transform",
+  "version": "1.0.0",
+  "description": "Vue移动端，图片自由变换组件",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shb190802/vue-picture-transform.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shb190802/vue-picture-transform/issues"
+  },
+  "homepage": "https://github.com/shb190802/vue-picture-transform#readme",
+  "dependencies": {
+    "vue-touch": "^2.0.0-beta.4"
+  }
+}
