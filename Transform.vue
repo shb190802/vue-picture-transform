@@ -1,18 +1,18 @@
 <template>
   <div ref='container' class="center" :style="containerStyles">
-    <div class="img-box" :style="boxStyles">
+    <div class="img-box" :class="{active:!disabled}" :style="boxStyles">
       <v-touch @pan="pictureMove" @panend="pictureMoveEnd">
         <div class="img" :style="imgStyles"></div>
       </v-touch> 
-      <div class="close center icon">
+      <div v-if="!disabled" class="close center icon">
         <img src="./images/icon_close.png" @click="close">
       </div>
-      <div class="rotate center icon">
+      <div v-if="!disabled"  class="rotate center icon">
         <v-touch @panstart="pictureRotateStart" @panmove="pictureRotate" @panend="pictureRotateEnd">
           <img src="./images/icon_rotate.png">
         </v-touch>
       </div>
-      <div class="scale center icon">
+      <div v-if="!disabled"  class="scale center icon">
         <v-touch @panstart="pictureScaleStart" @panmove="pictureScale" @panend="pictureScaleEnd">
           <img src="./images/icon_scale.png">
         </v-touch>
@@ -45,6 +45,10 @@ export default {
     minScale:{
       type: Number,
       default: 0.2
+    },
+    disabled: {
+      type: Boolean,
+      default: false
     }
   },
   data(){
@@ -165,11 +169,13 @@ export default {
     },
     // 拖动移动
     pictureMove(e){
+      if(this.disabled) return
       this.move.x = e.deltaX
       this.move.y = e.deltaY
     },
     // 移动结束，更新当前位置，清空缓存位置
     pictureMoveEnd(e){
+      if(this.disabled) return
       this.position.left += e.deltaX
       this.position.top += e.deltaY
       this.move.x = 0
@@ -233,7 +239,7 @@ export default {
   position: absolute;
   background-position: center;
 }
-.img-box::before {
+.active::before {
   position: absolute;
   left: -50%;
   top: -50%;
