@@ -1,11 +1,11 @@
 <template>
   <div ref='container' class="center" :style="containerStyles">
     <div class="img-box" :class="{active:!disabled}" :style="boxStyles">
-      <v-touch @pan="pictureMove" @panend="pictureMoveEnd">
+      <v-touch @panstart="pictureMove" @panmove="pictureMove" @panend="pictureMoveEnd" @tap="doSelected">
         <div class="img" :style="imgStyles"></div>
       </v-touch> 
       <div v-if="!disabled" class="close center icon">
-        <img src="./images/icon_close.png" @click="close">
+        <img src="./images/icon_close.png" @tap="close">
       </div>
       <div v-if="!disabled"  class="rotate center icon">
         <v-touch @panstart="pictureRotateStart" @panmove="pictureRotate" @panend="pictureRotateEnd">
@@ -49,12 +49,21 @@ export default {
     disabled: {
       type: Boolean,
       default: false
+    },
+    initImgUrl: {
+      type: String,
+      default: ''
+    },
+    initId: {
+      type: String | Number,
+      default: ''
     }
   },
   data(){
     return {
       id: '',// 容器的ID
       imgUrl: '',
+      img: null,
       backgroundSize: '',
       // 父容器信息
       parent: {
@@ -66,7 +75,9 @@ export default {
       // 当前图片容器中心点位置
       position:{
         left: 0,
-        top: 0
+        top: 0,
+        width: 100,
+        height: 100
       },
       move: {
         x: 0,
@@ -89,7 +100,8 @@ export default {
     containerStyles(){
       return {
         left: this.position.left + this.move.x +  'px',
-        top: this.position.top + this.move.y + 'px'
+        top: this.position.top + this.move.y + 'px',
+        zIndex: this.zIndex
       }
     },
     // 内层容器位置，影响大小和旋转
@@ -113,7 +125,9 @@ export default {
     }
   },
   mounted(){
-    // this.init({})
+    if(this.initImgUrl) {
+      this.init({img: this.initImgUrl,id: this.initId})
+    }
   },
   methods: {
     init({img,id}){
@@ -136,18 +150,26 @@ export default {
       })
     },
     close(){
-      console.log('close')
       this.$emit('close',this.id)
+    },
+    doSelected(){
+      this.$emit('selected',this.id)
     },
     setImgUrl(imgUrl){
       if(imgUrl === this.imgUrl) return 
+      this.img = null
       if(imgUrl) {
         this.imgUrl = imgUrl
         this.loadImg().then(img => {
+          this.img = img
           if(img.width > img.height) {
             this.backgroundSize = '100% auto'
+            this.position.width = 100
+            this.position.height = Math.round(100*img.height / img.width)
           }else {
             this.backgroundSize = 'auto 100%'
+            this.position.height = 100
+            this.position.width = Math.round(100*img.width / img.height)
           }
         })
       } else {
@@ -216,10 +238,17 @@ export default {
     // 获取图片旋转信息
     getTransformInfo(){
       return {
-        center: this.position,
+        center:{
+          x: this.position.left,
+          y: this.position.top
+        },
+        width: this.position.width,
+        height: this.position.height,
         scale: this.scale.scale,
         rotate: this.rotate.deg,
-        id: this.id
+        id: this.id,
+        imgUrl: this.imgUrl,
+        img: this.img
       }
     }
   }
@@ -265,6 +294,8 @@ export default {
 .img-box .img {
   width: 100%;
   height: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .img-box .icon {
   transform: scale(.12);
