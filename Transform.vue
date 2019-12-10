@@ -10,7 +10,9 @@
         <div class="img" :style="imgStyles"></div>
       </v-touch> 
       <div v-if="!disabled" class="close center icon">
-        <img src="./images/icon_close.png" @tap="close">
+        <v-touch @tap="close">
+          <img src="./images/icon_close.png">
+        </v-touch>
       </div>
       <div v-if="!disabled"  class="rotate center icon">
         <v-touch
