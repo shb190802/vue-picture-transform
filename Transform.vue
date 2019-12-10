@@ -1,19 +1,32 @@
 <template>
   <div ref='container' class="center" :style="containerStyles">
     <div class="img-box" :class="{active:!disabled}" :style="boxStyles">
-      <v-touch @panstart="pictureMove" @panmove="pictureMove" @panend="pictureMoveEnd" @tap="doSelected">
+      <v-touch
+        :panOptions="{threshold:2}"
+        @panstart="pictureMove"
+        @panmove="pictureMove"
+        @panend="pictureMoveEnd"
+        @tap="doSelected">
         <div class="img" :style="imgStyles"></div>
       </v-touch> 
       <div v-if="!disabled" class="close center icon">
         <img src="./images/icon_close.png" @tap="close">
       </div>
       <div v-if="!disabled"  class="rotate center icon">
-        <v-touch @panstart="pictureRotateStart" @panmove="pictureRotate" @panend="pictureRotateEnd">
+        <v-touch
+          :panOptions="{threshold:2}"
+          @panstart="pictureRotateStart"
+          @panmove="pictureRotate"
+          @panend="pictureRotateEnd">
           <img src="./images/icon_rotate.png">
         </v-touch>
       </div>
       <div v-if="!disabled"  class="scale center icon">
-        <v-touch @panstart="pictureScaleStart" @panmove="pictureScale" @panend="pictureScaleEnd">
+        <v-touch
+          :panOptions="{threshold:2}"
+          @panstart="pictureScaleStart"
+          @panmove="pictureScale"
+          @panend="pictureScaleEnd">
           <img src="./images/icon_scale.png">
         </v-touch>
       </div>
@@ -298,6 +311,6 @@ export default {
   background-position: center;
 }
 .img-box .icon {
-  transform: scale(.12);
+  transform: scale(.15);
 }
 </style>
