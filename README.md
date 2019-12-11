@@ -12,6 +12,8 @@
 npm i -S vue-picture-transform
 ```
 
+**属性**
+
 | 属性       | 类型   | 默认值 | 说明                                           |
 | ---------- | ------ | ------ | ---------------------------------------------- |
 | size       | Number | 100    | 操作框大小默认100*100                          |
@@ -23,13 +25,14 @@ npm i -S vue-picture-transform
 | id     | String |        | 初始化ID（可不传，之后调用init方法来传）       |
 
 
+**事件**
 
 | 事件     | 说明             | 参数 | 参数说明             |
 | -------- | ---------------- | ---- | -------------------- |
 | close    | 点击叉号关闭事件 | id   | 初始化传进来的initId |
 | selected | 选中事件         | id   | 初始化传进来的initId |
 
-
+**组件方法**
 
 | 组件方法           | 说明                   | 返回值      |
 | ------------------ | ---------------------- | ----------- |
@@ -81,8 +84,8 @@ export default {
           v-for="item in useDecorateList"
           :key="item.id"
           :disabled="!(item.id === active)"
-          :initImgUrl="item.img"
-          :initId="item.id"
+          :imgUrl="item.img"
+          :id="item.id"
           :zIndex="item.zIndex"
           @close="close(item.id)"
           @selected="selected(item.id)"
