@@ -19,8 +19,8 @@ npm i -S vue-picture-transform
 | maxScale   | Number | 3      | 最大放大倍率                                   |
 | minScale   | Number | 0.2    | 最小缩放倍率                                   |
 | disabled   | Number | false  | 禁用操作框                                     |
-| initImgUrl | String |        | 初始化图片地址（可不传，之后调用init方法来传） |
-| initId     | String |        | 初始化ID（可不传，之后调用init方法来传）       |
+| imgUrl | String |        | 初始化图片地址（可不传，之后调用init方法来传） |
+| id     | String |        | 初始化ID（可不传，之后调用init方法来传）       |
 
 
 
@@ -57,7 +57,7 @@ export default {
   },
   mounted(){
     this.$refs.transform.init({
-      img: imgUrl
+      imgUrl: imgUrl
     })
   },
   methods: {

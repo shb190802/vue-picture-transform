@@ -65,19 +65,19 @@ export default {
       type: Boolean,
       default: false
     },
-    initImgUrl: {
+    imgUrl: {
       type: String,
       default: ''
     },
-    initId: {
+    id: {
       type: String | Number,
       default: ''
     }
   },
   data(){
     return {
-      id: '',// 容器的ID
-      imgUrl: '',
+      useId: '',// 容器的ID
+      useImgUrl: '',
       img: null,
       backgroundSize: '',
       // 父容器信息
@@ -134,19 +134,19 @@ export default {
         width: this.size * this.scale.scale + 'px',
         height: this.size * this.scale.scale + 'px',
         zIndex: this.zIndex,
-        backgroundImage: `url(${this.imgUrl})`,
+        backgroundImage: `url(${this.useImgUrl})`,
         backgroundSize: this.backgroundSize
       }
     }
   },
   mounted(){
-    if(this.initImgUrl) {
-      this.init({img: this.initImgUrl,id: this.initId})
+    if(this.imgUrl) {
+      this.init({imgUrl: this.imgUrl,id: this.id})
     }
   },
   methods: {
-    init({img,id}){
-      this.id = id
+    init({imgUrl,id}){
+      this.useId = id
       this.$nextTick(() => {
         let parent = this.$refs.container.parentNode
         if(getComputedStyle(parent).position === 'static') parent.style.position = 'relative'
@@ -161,20 +161,20 @@ export default {
           this.parent.top += parent.offsetTop
           parent = parent.offsetParent
         }while(parent !== document.body)
-        this.setImgUrl(img)
+        this.setImgUrl(imgUrl)
       })
     },
     close(){
-      this.$emit('close',this.id)
+      this.$emit('close',this.useId)
     },
     doSelected(){
-      this.$emit('selected',this.id)
+      this.$emit('selected',this.useId)
     },
     setImgUrl(imgUrl){
-      if(imgUrl === this.imgUrl) return 
+      if(imgUrl === this.useImgUrl) return 
       this.img = null
       if(imgUrl) {
-        this.imgUrl = imgUrl
+        this.useImgUrl = imgUrl
         this.loadImg().then(img => {
           this.img = img
           if(img.width > img.height) {
@@ -201,7 +201,7 @@ export default {
           console.log('Load image Error!',err.message)
           reject(err)
         }
-        img.src = this.imgUrl
+        img.src = this.useImgUrl
       })
     },
     // 拖动移动
@@ -261,8 +261,8 @@ export default {
         height: this.position.height,
         scale: this.scale.scale,
         rotate: this.rotate.deg,
-        id: this.id,
-        imgUrl: this.imgUrl,
+        id: this.useId,
+        imgUrl: this.useImgUrl,
         img: this.img
       }
     }

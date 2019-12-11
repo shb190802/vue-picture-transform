@@ -1,6 +1,6 @@
 {
   "name": "vue-picture-transform",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Vue移动端，图片自由变换组件",
   "main": "index.js",
   "scripts": {
