@@ -11,7 +11,8 @@
       </v-touch> 
       <div v-if="!disabled" class="close center icon">
         <v-touch @tap="close">
-          <img src="./images/icon_close.png">
+          <span class="img-icon close"></span>
+          <!-- <img src="./images/icon_close.png"> -->
         </v-touch>
       </div>
       <div v-if="!disabled"  class="rotate center icon">
@@ -20,7 +21,8 @@
           @panstart="pictureRotateStart"
           @panmove="pictureRotate"
           @panend="pictureRotateEnd">
-          <img src="./images/icon_rotate.png">
+          <span class="img-icon rotate"></span>
+          <!-- <img src="./images/icon_rotate.png"> -->
         </v-touch>
       </div>
       <div v-if="!disabled"  class="scale center icon">
@@ -29,7 +31,8 @@
           @panstart="pictureScaleStart"
           @panmove="pictureScale"
           @panend="pictureScaleEnd">
-          <img src="./images/icon_scale.png">
+          <span class="img-icon scale"></span>
+          <!-- <img src="./images/icon_scale.png"> -->
         </v-touch>
       </div>
     </div>
@@ -313,6 +316,23 @@ export default {
   background-position: center;
 }
 .img-box .icon {
-  transform: scale(.15);
+  /* transform: scale(.15); */
+}
+.img-icon {
+  position: relative;
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.img-icon.close{
+  background-image: url('./images/icon_close.png');
+}
+.img-icon.rotate{
+  background-image: url('./images/icon_rotate.png');
+}
+.img-icon.scale{
+  background-image: url('./images/icon_scale.png');
 }
 </style>
