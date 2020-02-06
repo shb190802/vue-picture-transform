@@ -233,8 +233,9 @@ export default {
       this.scale.scale = this.getScale(e)
     },
     getScale(e){
+      let docScrollTop = document.documentElement.scrollTop || document.body.scrollTop
       let x = e.center.x - this.parent.left - this.position.left
-      let y = e.center.y - this.parent.top - this.position.top
+      let y = e.center.y - this.parent.top - this.position.top + docScrollTop
       return Math.min(Math.max(Math.sqrt(x*x + y*y) / Math.sqrt(2*(this.size/2)*(this.size/2)),this.minScale),this.maxScale)
     },
     // 旋转
@@ -249,8 +250,9 @@ export default {
       this.rotate.deg = this.getDeg(e)
     },
     getDeg(e){
+      let docScrollTop = document.documentElement.scrollTop || document.body.scrollTop
       let x = e.center.x - this.parent.left - this.position.left
-      let y = e.center.y - this.parent.top - this.position.top
+      let y = e.center.y - this.parent.top - this.position.top + docScrollTop
       return ~~(Math.atan2(y,x)*180/Math.PI) + PADDING_DEG
     },
     // 获取图片旋转信息
